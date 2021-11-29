@@ -12,10 +12,11 @@ def pytest_addoption(parser):
 
 
 # тест в терминале можно запустить:
-# - по-умолчанию - без указания дополнительных опций (браузер Chrome, язык установленный основным в браузере)
-# - с указанием только браузера
-# - с указанием только языка
-# - с указанием браузера и языка
+# - с указанием только браузера, язык будет выбранный установленный по-умолчанию пользователем:
+#   pytest --browser_name=chrome test_items.py
+# - с указанием браузера и языка:
+#   pytest --language=es --browser_name=chrome test_items.py
+#
 @pytest.fixture(scope="function")
 def browser(request):
     user_language = request.config.getoption("language")
@@ -23,7 +24,7 @@ def browser(request):
 
     browser = None
 
-    if browser_name == "chrome" or browser_name is None:
+    if browser_name == "chrome":
         print("\nstart chrome browser for test..")
         if user_language is not None:
             options = Options()
